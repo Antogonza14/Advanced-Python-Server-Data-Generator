@@ -1,10 +1,7 @@
 # Advanced-Python-Server-Data-Generator
 A Python project to generate synthetic server data, organize it in a DataFrame, and create visual analytics. Includes functions for hostname generation, OS/environment/country classification, and visualizations using Pandas and Matplotlib
 
-
-# Advanced Python Programming Practice - Data Science and Big Data
-
-This repository contains the practice project for the **Advanced Python Programming** module from the Master’s in Data Science, Big Data, and Business Analytics. The objective of this practice is to develop a Python script that generates a dataset of random server names (hostnames), organizes them in a DataFrame, and creates visualizations based on the data.
+This repository contains the practice project for the **Advanced Python Programming** . The objective of this is to develop a Python script that generates a dataset of random server names (hostnames), organizes them in a DataFrame, and creates visualizations based on the data.
 
 ## Requirements
 
