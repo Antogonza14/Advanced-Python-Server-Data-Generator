@@ -1,64 +1,11 @@
+import random
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
 # Global variables
 df = None
 dataset = []
 
-def set_hostnames(number_of_hosts):
-    global dataset
-    dataset = []  # Reset dataset
-    
-    os_choices = ["L", "S", "A", "H"]  # Represents Linux, Solaris, AIX, and HP-UX
-    os_weights = [0.4, 0.3, 0.2, 0.1]
-    
-    env_choices = ["D", "I", "T", "S", "P"]  # Represents Development, Integration, Testing, Staging, and Production
-    env_weights = [0.1, 0.1, 0.25, 0.25, 0.3]
-    
-    country_choices = ["NOR", "FRA", "ITA", "ESP", "DEU", "IRL"]
-    country_weights = [0.06, 0.09, 0.16, 0.16, 0.23, 0.3]
-    
-    nodes = {}  # Dictionary to store node counts for each OS-env-country combination
-    
-    for _ in range(number_of_hosts):
-        os_char = random.choices(os_choices, os_weights)[0]
-        env_char = random.choices(env_choices, env_weights)[0]
-        country_code = random.choices(country_choices, country_weights)[0]
-        
-        # Increment node count for combination
-        key = f"{os_char}{env_char}{country_code}"
-        nodes[key] = nodes.get(key, 0) + 1
-        node_number = str(nodes[key]).zfill(3)
-        
-        hostname = f"{os_char}{env_char}{country_code}{node_number}"
-        dataset.append({"hostname": hostname})
-
-def get_os(hostname):
-    os_dict = {"L": "Linux", "S": "Solaris", "A": "AIX", "H": "HP-UX"}
-    return os_dict.get(hostname[0], "Unknown")
-
-def get_environment(hostname):
-    env_dict = {"D": "Development", "I": "Integration", "T": "Testing", "S": "Staging", "P": "Production"}
-    return env_dict.get(hostname[1], "Unknown")
-
-def get_country(hostname):
-    country_dict = {"NOR": "Norway", "FRA": "France", "ITA": "Italy", "ESP": "Spain", "DEU": "Germany", "IRL": "Ireland"}
-    return country_dict.get(hostname[2:5], "Unknown")
-
-def set_dataframe(count):
-    global df
-    set_hostnames(count)
-    
-    for item in dataset:
-        hostname = item["hostname"]
-        item["os"] = get_os(hostname)
-        item["environment"] = get_environment(hostname)
-        item["country"] = get_country(hostname)
-        item["node"] = int(hostname[-3:])
-    
-    df = pd.DataFrame(dataset)
-
-df_env_country = df.groupby(['country', 'environment']).size().unstack()
-df_env_country.plot(kind='bar', stacked=True)
-plt.title("Environment Distribution by Country")
-plt.xlabel("Country")
-plt.ylabel("Number of Hosts")
-plt.show()
 
